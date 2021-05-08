@@ -63,6 +63,7 @@ impl State {
         ctx.set_active_console(1);
         ctx.cls();
         ctx.print(1,1, "Jai Hanumanji ki");
+        ctx.print(40,1, &format!("SCORE: {}", self.player.score));
         ctx.set_active_console(0);
         ctx.cls();
         self.bckgrnd.timer += ctx.frame_time_ms;
@@ -99,6 +100,8 @@ impl State {
             if enemy.entity.active && enemy.entity.x <= 0 {
                 enemy.entity.active = false;
                 self.active_enemies -= 1;
+                /* Enemy dodged! Go have 10 pts */
+                self.player.score += 10;
             }
         }
 
