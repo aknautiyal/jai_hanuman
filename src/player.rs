@@ -28,7 +28,6 @@ impl Visibility for Player {
 
     fn move_y(&mut self) {
         let h = self.entity.outline.height();
-        let w = self.entity.outline.height();
         if self.entity.vel_y < 8.0 {
             self.entity.vel_y += 1.0;
         }
@@ -37,7 +36,7 @@ impl Visibility for Player {
         self.entity.outline.y1 = self.entity.y;
         self.entity.outline.y2 = self.entity.y + h;
 
-        if (self.entity.y < 0) {
+        if self.entity.y < 0 {
             self.entity.y = 0;
             self.entity.outline.y1 = 0;
             self.entity.outline.y2 = h;
@@ -50,11 +49,10 @@ impl Visibility for Player {
          */
     }
 
-    fn render(&mut self, ctx: &mut BTerm, show_box: bool) {
+    fn render(&mut self, ctx: &mut BTerm, _show_box: bool) {
         self.entity.frame_timer += ctx.frame_time_ms;
-        if (self.entity.frame_timer > self.entity.frame_duration) {
+        if self.entity.frame_timer > self.entity.frame_duration {
             self.entity.frame_timer = 0.0;
-            //self.entity.frames += 1;
             self.entity.frames = (self.entity.frames + 1 )  % self.entity.sprite_vec.len() as i32;
             self.move_x();
             self.move_y();
@@ -77,7 +75,7 @@ impl Visibility for Player {
 
 impl Player {
     pub fn flap(&mut self) {
-        if (self.entity.y > 0) {
+        if self.entity.y > 0 {
             self.entity.vel_y -= 5.0;
         }
     }

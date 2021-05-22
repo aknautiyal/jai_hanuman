@@ -33,7 +33,6 @@ impl Visibility for Enemy {
     }
 
     fn move_x(&mut self) {
-        let h = self.entity.outline.height();
         let w = self.entity.outline.width();
         self.entity.x -= 7;
         self.entity.outline.x1 = self.entity.x;
@@ -41,9 +40,9 @@ impl Visibility for Enemy {
         //self.entity.outline = Rect::with_size(self.entity.x, self.entity.y, h, w);
     }
 
-    fn render(&mut self, ctx: &mut BTerm, show_box: bool) {
+    fn render(&mut self, ctx: &mut BTerm, _show_box: bool) {
         self.entity.frame_timer += ctx.frame_time_ms;
-        if (self.entity.frame_timer > self.entity.frame_duration) {
+        if self.entity.frame_timer > self.entity.frame_duration {
             self.entity.frame_timer = 0.0;
             self.entity.frames = (self.entity.frames + 1) % self.entity.sprite_vec.len() as i32;
             self.move_x();

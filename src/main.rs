@@ -1,7 +1,6 @@
 pub mod entity;
 pub mod player;
 pub mod enemy;
-use crate::entity::Entity;
 use crate::entity::Visibility;
 use crate::player::Player;
 use crate::enemy::Enemy;
@@ -86,7 +85,7 @@ impl State {
         if self.active_enemies == 0 {
             self.enemy.clear();
             let active_enemies = rand::thread_rng().gen_range(ENEMY_NO / 2, ENEMY_NO);
-            for n in 0..active_enemies {
+            for _ in 0..active_enemies {
                 let mut e = Enemy::create(get_rnd_x(), get_rnd_y(), 47,42, 2, 100.0);
                 e.entity.sprite_vec = vec![0,1];
                 e.entity.active = true;
@@ -133,7 +132,7 @@ impl State {
             }
         }
     }
-    fn gameOver(&mut self, ctx: &mut BTerm) {
+    fn game_over(&mut self, ctx: &mut BTerm) {
         ctx.set_active_console(1);
         ctx.cls();
         ctx.print_centered(5, "Game-Over!");
@@ -155,7 +154,7 @@ impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
         match self.mode {
             GameMode::Menu => self.main_menu(ctx),
-            GameMode::End => self.gameOver(ctx),
+            GameMode::End => self.game_over(ctx),
             GameMode::Playing => self.play(ctx),
         }
 
@@ -168,7 +167,7 @@ fn main() -> BError {
 
     bracket_terminal::link_resource!(HANUMAN_JI, "resources/sprite_1.png");
 
-    let mut context = BTermBuilder::new()
+    let context = BTermBuilder::new()
         .with_sprite_console(SCREEN_WIDTH, SCREEN_HEIGHT, 0)
         .with_font("terminal8x8.png", 8, 8)
         .with_simple_console_no_bg(80, 50, "terminal8x8.png")
