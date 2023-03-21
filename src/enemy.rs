@@ -1,6 +1,7 @@
 use bracket_lib::prelude::*;
 use crate::entity::Entity;
 use crate::entity::Visibility;
+use rand::Rng;
 
 pub struct Enemy {
     pub entity: Entity,
@@ -13,7 +14,7 @@ impl Visibility for Enemy {
             entity : Entity {
                 x: pos_x,
                 y: pos_y,
-                vel_x: 0.0,
+                vel_x: rand::thread_rng().gen_range(1.0, 5.0),
                 vel_y: 0.0,
                 outline: Rect::with_size(pos_x, pos_y, w, h),
                 frames : 0,
@@ -34,7 +35,7 @@ impl Visibility for Enemy {
 
     fn move_x(&mut self) {
         let w = self.entity.outline.width();
-        self.entity.x -= 7;
+        self.entity.x -= 7 +  (self.entity.vel_x) as i32;
         self.entity.outline.x1 = self.entity.x;
         self.entity.outline.x2 = self.entity.x + w;
         //self.entity.outline = Rect::with_size(self.entity.x, self.entity.y, h, w);
