@@ -37,6 +37,7 @@ impl Visibility for Player {
         self.entity.outline.y2 = self.entity.y + h;
 
         if self.entity.y < 0 {
+            self.entity.vel_y = 0.0;
             self.entity.y = 0;
             self.entity.outline.y1 = 0;
             self.entity.outline.y2 = h;
